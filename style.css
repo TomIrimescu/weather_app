@@ -75,6 +75,14 @@ header h1 {
     margin-bottom: 30px;
 }
 
+#weather .humidity {
+    float: left;
+    clear: both;
+    padding-left: 18px;
+    margin-top: -19px;
+    text-transform: uppercase;
+}
+
 #weatherDescription {
     float: left;
 }
@@ -87,6 +95,7 @@ header h1 {
 
 #weatherTemperature {
     float: right;
+    margin-top: -29px;
 }
 
 #load {

@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html>
-
+<!doctype html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>ES6 Weather App</title>
+    <script src="https://google.github.io/traceur-compiler/bin/traceur.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.31/system.js"></script>
     <link rel="stylesheet" href="style.css">
-	<title>Weather App</title>
 </head>
-
 <body>
 <header>
     <h1>Weather App</h1>
@@ -22,13 +23,13 @@
 
         <div id="weatherDescription">Weather Description</div>
         <div id="weatherHumidity">Weather Humidity</div>
+        <div class="humidity">% humidity</div>
         <div id="weatherTemperature">Temperature</div>
 
     </div>
 </div>
-<script src="init.js"></script>
-<script src="weather-data.js"></script>
-<script src="app.js"></script>
+<script>
+    System.import('app.js');
+</script>
 </body>
-
 </html>

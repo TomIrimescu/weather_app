@@ -1,41 +1,37 @@
-"use strict";
+import * as ELEMENTS from 'elements.js';
+import {Http} from 'http.js';
+import {WeatherData, WEATHER_PROXY_HANDLER} from 'weather-data.js';
 
-searchButton.addEventListener('click', searchWeather);
+const APP_ID = '69f161a860e84fa3e6cbd713a2f5244a';
+
+ELEMENTS.ELEMENT_SEARCH_BUTTON.addEventListener('click', searchWeather);
 
 function searchWeather() {
-    loadingText.style.display = 'block';
-    weatherBox.style.display = 'none';
-    var cityName = searchCity.value;
-    if (cityName.trim().length == 0) {
-        return alert('Please enter a City Name');
+    const CITY_NAME = ELEMENTS.ELEMENT_SEARCHED_CITY.value.trim();
+    if (CITY_NAME.length == 0) {
+        return alert('Please enter a city name');
     }
-    var http = new XMLHttpRequest();
-    var apiKey = '69f161a860e84fa3e6cbd713a2f5244a';
-    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&units=metric&appid=' + apiKey;
-    var method = 'Get';
-
-    http.open(method, url);
-    http.onreadystatechange = function() {
-        if (http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-            var data = JSON.parse(http.responseText);
-            var weatherData = new Weather(cityName, data.weather[0].description.toUpperCase());
-            weatherData.temperature = data.main.temp;
-            weatherData.humidity = data.main.humidity;
-            console.log(weatherData);
-            updateWeather(weatherData);
-        } else if (http.readyState === XMLHttpRequest.DONE) {
-            alert('Something went wrong!');
-        }
-    };
-    http.send();
+    ELEMENTS.ELEMENT_LOADING_TEXT.style.display = 'block';
+    ELEMENTS.ELEMENT_WEATHER_BOX.style.display = 'none';
+    const URL = 'http://api.openweathermap.org/data/2.5/weather?q=' + CITY_NAME + '&units=metric&appid=' + APP_ID;
+    Http.fetchData(URL)
+        .then(responseData => {
+            const WEATHER_DATA = new WeatherData(CITY_NAME.toUpperCase(), responseData.weather[0].description.toUpperCase(), responseData.main.humidity);
+            const WEATHER_PROXY = new Proxy(WEATHER_DATA, WEATHER_PROXY_HANDLER);
+            WEATHER_PROXY.temperature = responseData.main.temp;
+            console.log(responseData);
+            updateWeather(WEATHER_PROXY);
+        })
+        .catch(error => alert(error));
 }
 
-function updateWeather(weatherData){
-    weatherCity.textContent = weatherData.cityName;
-    weatherDescription.textContent = weatherData.description;
-    weatherTemperature.textContent = weatherData.temperature;
-    weatherHumidity.textContent = weatherData.humidity;
+function updateWeather(weatherData) {
+    console.log(weatherData);
+    ELEMENTS.ELEMENT_WEATHER_CITY.textContent = weatherData.cityName;
+    ELEMENTS.ELEMENT_WEATHER_DESCRIPTION.textContent = weatherData.description;
+    ELEMENTS.ELEMENT_WEATHER_HUMIDITY.textContent = weatherData.humidity;
+    ELEMENTS.ELEMENT_WEATHER_TEMPERATURE.textContent = weatherData.temperature;
 
-    loadingText.style.display = 'none';
-    weatherBox.style.display = 'block';
+    ELEMENTS.ELEMENT_LOADING_TEXT.style.display = 'none';
+    ELEMENTS.ELEMENT_WEATHER_BOX.style.display = 'block';
 }

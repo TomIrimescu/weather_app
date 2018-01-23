@@ -1,1 +1,1 @@
-Javascript app using asynchronous call (XMLHttpRequest) to weather service
+ES6 Javascript app using http promise(XMLHttpRequest) to weather service

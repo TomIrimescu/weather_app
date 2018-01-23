@@ -1,26 +1,18 @@
-"use strict";
-
-function Weather(cityName, description) {
-    this.cityName = cityName.toUpperCase();
-    this.description = description;
-    this._temperature = '';
-    this._humidity = '';
+export class WeatherData {
+    constructor(cityName, description, humidity) {
+        this.cityName = cityName;
+        this.description = description;
+        this.humidity = humidity;
+        this.temperature = '';
+    }
 }
 
-Object.defineProperty(Weather.prototype, 'temperature', {
-    get: function() {
-        return this._temperature;
+export const WEATHER_PROXY_HANDLER = {
+    get: function(target, property) {
+        return Reflect.get(target, property);
     },
-    set: function(value) {
-        this._temperature = (value * 1.8 + 32).toFixed(2) + ' F';
+    set: function(target, property, value) {
+        const newValue = (value * 1.8 + 32).toFixed(2) + ' F';
+        return Reflect.set(target, property, newValue);
     }
-});
-
-Object.defineProperty(Weather.prototype, 'humidity', {
-    get: function() {
-        return this._humidity;
-    },
-    set: function(value) {
-        this._humidity = value + '% HUMIDITY';
-    }
-});
+};
