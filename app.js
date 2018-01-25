@@ -6,6 +6,13 @@ const APP_ID = '69f161a860e84fa3e6cbd713a2f5244a';
 
 ELEMENTS.ELEMENT_SEARCH_BUTTON.addEventListener('click', searchWeather);
 
+ELEMENTS.ELEMENT_SEARCHED_CITY.addEventListener('keyup', function(event) {
+  event.preventDefault();
+  if (event.keyCode === 13) {
+    searchWeather();
+  }
+});
+
 function searchWeather() {
     const CITY_NAME = ELEMENTS.ELEMENT_SEARCHED_CITY.value.trim();
     if (CITY_NAME.length == 0) {
