@@ -15,7 +15,7 @@ ELEMENTS.ELEMENT_SEARCHED_CITY.addEventListener('keyup', function(event) {
 
 function searchWeather() {
     const CITY_NAME = ELEMENTS.ELEMENT_SEARCHED_CITY.value.trim();
-    if (CITY_NAME.length == 0) {
+    if (CITY_NAME.length === 0) {
         return alert('Please enter a city name');
     }
     ELEMENTS.ELEMENT_LOADING_TEXT.style.display = 'block';
